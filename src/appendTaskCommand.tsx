@@ -19,11 +19,20 @@ interface appendTaskArgs {
   dueDate: string;
 }
 
+const MS_IN_DAY = 1000 * 60 * 60 * 24;
+
 export default function AppendTask(props: { arguments: appendTaskArgs }) {
   const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
   const { dueDate } = props.arguments;
-  const dateContent = dueDate ? " 📅 " + dueDate : "";
+  const todayDate = new Date().toISOString().slice(0, 10)
+  const tomorrowDate = new Date(Date.now() + MS_IN_DAY).toISOString().slice(0, 10)
+  const date = dueDate === "today" 
+    ? todayDate 
+    : dueDate === "tomorrow" 
+      ? tomorrowDate 
+      : dueDate;
+  const dateContent = dueDate ? ` 📅 ${date}` : "";
 
   const { appendTemplate, heading, notePath, noteTag, vaultName, silent } =
     getPreferenceValues<appendTaskPreferences>();
@@ -113,7 +122,7 @@ export default function AppendTask(props: { arguments: appendTaskArgs }) {
                   type: ObsidianTargetType.AppendTask,
                   path: notePath,
                   vault: vault,
-                  text: "- [ ] #task " + content + dateContent,
+                  text: "- [ ] #want " + content + dateContent,
                   heading: heading,
                 })}
               />
