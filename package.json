@@ -4,7 +4,7 @@
   "title": "Obsidian",
   "description": "Control Obsidian with Raycast",
   "icon": "extension_icon.png",
-  "author": "KevinBatdorf",
+  "author": "m0rtyn",
   "categories": [
     "Productivity"
   ],
@@ -157,154 +157,10 @@
       ]
     },
     {
-      "name": "starredNotesCommand",
-      "title": "Bookmarked Notes",
-      "subtitle": "Obsidian",
-      "description": "Search, open, view, copy, paste and edit bookmarked notes in Obsidian.",
-      "mode": "view",
-      "arguments": [
-        {
-          "name": "searchArgument",
-          "placeholder": "Note",
-          "type": "text",
-          "required": false
-        },
-        {
-          "name": "tagArgument",
-          "placeholder": "Tag",
-          "type": "text",
-          "required": false
-        }
-      ],
-      "preferences": [
-        {
-          "name": "appendTemplate",
-          "type": "textfield",
-          "title": "Template for Append action",
-          "required": false,
-          "description": "Specify a template for Append action (e.g. '- {content}')"
-        },
-        {
-          "name": "appendSelectedTemplate",
-          "type": "textfield",
-          "title": "Template for Append Selected Text action",
-          "required": false,
-          "description": "Specify a template for Append Selected Text action (e.g. '- {content}')"
-        },
-        {
-          "name": "showDetail",
-          "type": "checkbox",
-          "label": "Show Detail",
-          "title": "Show Detail",
-          "required": false,
-          "description": "Show the notes content in a detail view",
-          "default": true
-        },
-        {
-          "name": "showMetadata",
-          "type": "checkbox",
-          "label": "Show Metadata",
-          "title": "Show Metadata",
-          "required": false,
-          "description": "Show the notes metadata in a detail view (only works when Show Detail is enabled)",
-          "default": false
-        },
-        {
-          "name": "searchContent",
-          "type": "checkbox",
-          "label": "Search Content",
-          "title": "Search Content",
-          "required": false,
-          "description": "Use the content of notes for searching",
-          "default": false
-        },
-        {
-          "name": "primaryAction",
-          "type": "dropdown",
-          "title": "Primary Action",
-          "required": false,
-          "description": "Select a primary action to be executed on enter",
-          "defaultValue": "quicklook",
-          "data": [
-            {
-              "title": "Quick Look",
-              "value": "quicklook"
-            },
-            {
-              "title": "Open in Obsidian",
-              "value": "obsidian"
-            },
-            {
-              "title": "Open in new Obsidian tab",
-              "value": "newpane"
-            },
-            {
-              "title": "Open in default app",
-              "value": "defaultapp"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "openVaultCommand",
       "title": "Open Vault",
       "subtitle": "Obsidian",
       "description": "Open a vault in Obsidian.",
-      "mode": "view"
-    },
-    {
-      "name": "dailyNoteAppendCommand",
-      "title": "Append to Daily Note",
-      "subtitle": "Obsidian",
-      "description": "Append text to your daily note",
-      "mode": "view",
-      "arguments": [
-        {
-          "name": "text",
-          "placeholder": "Take out the trash",
-          "type": "text",
-          "required": true
-        }
-      ],
-      "preferences": [
-        {
-          "name": "appendTemplate",
-          "type": "textfield",
-          "title": "Template for Daily Note Append action",
-          "required": false,
-          "description": "Specify a template for Daily Note Append action (e.g. '- {content}')"
-        },
-        {
-          "name": "vaultName",
-          "type": "textfield",
-          "title": "Name of Obsidian vault where note is",
-          "required": false,
-          "description": "Name of Obsidian vault where note is"
-        },
-        {
-          "name": "heading",
-          "type": "textfield",
-          "title": "Name of heading in note in which to append",
-          "required": false,
-          "description": "If no heading is set, text will be appended to the end of the daily note"
-        },
-        {
-          "name": "silent",
-          "type": "checkbox",
-          "label": "Silent Mode",
-          "title": "Silent Mode",
-          "required": false,
-          "description": "Don't open daily note when appending to the daily note.",
-          "default": true
-        }
-      ]
-    },
-    {
-      "name": "dailyNoteCommand",
-      "title": "Daily Note",
-      "subtitle": "Obsidian",
-      "description": "Open daily note in Obsidian. Will create new daily note when it doesn't exist yet.",
       "mode": "view"
     },
     {
@@ -539,6 +395,53 @@
           "description": "Defaults to #task for compatibility with Obsidian Tasks.",
           "type": "textfield",
           "default": "#task"
+        },
+        {
+          "description": "Name of Obsidian vault where note is",
+          "name": "vaultName",
+          "required": false,
+          "title": "Name of Obsidian vault where note is",
+          "type": "textfield"
+        },
+        {
+          "description": "If no heading is not set, text will be appended to the end of the note",
+          "name": "heading",
+          "required": false,
+          "title": "Name of heading in note in which to append",
+          "type": "textfield"
+        },
+        {
+          "default": true,
+          "description": "Don't open note when appending.",
+          "label": "Silent Mode",
+          "name": "silent",
+          "required": false,
+          "title": "Silent Mode",
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "name": "appendNoteCommand",
+      "title": "Append Note",
+      "subtitle": "Obsidian",
+      "description": "Append a note to a note of your choice",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "text",
+          "placeholder": "Your note",
+          "type": "text",
+          "required": true
+        }
+      ],
+      "preferences": [
+        {
+          "description": "Path of note",
+          "name": "notePath",
+          "required": true,
+          "title": "Path of the note you wish to append the task to",
+          "type": "textfield"
         },
         {
           "description": "Name of Obsidian vault where note is",
