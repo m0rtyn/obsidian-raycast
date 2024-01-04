@@ -1,18 +1,13 @@
-import { Action, ActionPanel, closeMainWindow, getPreferenceValues, List, open, popToRoot } from "@raycast/api";
+import { closeMainWindow, getPreferenceValues, List,  popToRoot } from "@raycast/api";
 import { useEffect, useState } from "react";
-import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedURIPluginNotInstalled";
 import { NoPathProvided } from "./components/Notifications/NoPathProvided";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
-import { vaultsWithoutAdvancedURIToast } from "./components/Toasts";
 import { appendTaskPreferences } from "./utils/preferences";
 import {
   applyTemplates,
-  getObsidianTarget,
-  ObsidianTargetType,
   useObsidianVaults,
-  vaultPluginCheck,
 } from "./utils/utils";
-import { clearCache } from "./utils/data/cache";
+import { appendFile} from "node:fs/promises";
 
 interface appendNoteArgs {
   text: string;
@@ -22,9 +17,8 @@ export default function AppendNote(props: { arguments: appendNoteArgs }) {
   const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
 
-  const { appendTemplate, heading, notePath, vaultName, silent } =
-    getPreferenceValues<appendTaskPreferences>();
-  const [vaultsWithPlugin, vaultsWithoutPlugin] = vaultPluginCheck(vaults, "obsidian-advanced-uri");
+  const { appendTemplate, heading, notePath, vaultName, silent } = getPreferenceValues<appendTaskPreferences>();
+  // const [vaultsWithPlugin, vaultsWithoutPlugin] = vaultPluginCheck(vaults, "obsidian-advanced-uri");
   const [content, setContent] = useState<string | null>(null);
 
   useEffect(() => {
@@ -44,80 +38,16 @@ export default function AppendNote(props: { arguments: appendNoteArgs }) {
     return <NoVaultFoundMessage />;
   }
 
-  if (vaultsWithoutPlugin.length > 0) {
-    vaultsWithoutAdvancedURIToast(vaultsWithoutPlugin);
-  }
-
-  if (vaultsWithPlugin.length === 0) {
-    return <AdvancedURIPluginNotInstalled />;
-  }
-
-  if (vaultName) {
-    // Fail if selected vault doesn't have plugin
-    if (!vaultsWithPlugin.some((v) => v.name === vaultName)) {
-      return <AdvancedURIPluginNotInstalled vaultName={vaultName} />;
-    }
-  }
-
   if (!notePath) {
     // Fail if selected vault doesn't have plugin
     return <NoPathProvided />;
   }
 
-  const selectedVault = vaultName && vaults.find((vault) => vault.name === vaultName);
+  const inbox_md = "/Users/m0rtyn/Repos/motion/Log.md";
+  console.debug("🚀 ~ AppendNote ~ inbox_md:", inbox_md);
+  appendFile(inbox_md, "\n" + content);
 
-  // If there's a configured vault or only one vault, use that
-  if (selectedVault || vaultsWithPlugin.length === 1) {
-    const vaultToUse = selectedVault || vaultsWithPlugin[0];
-    const openObsidian = async () => {
-      const notePathExpanded = await applyTemplates(notePath);
-      const target = getObsidianTarget({
-        type: ObsidianTargetType.AppendNote,
-        path: notePathExpanded,
-        vault: vaultToUse,
-        text: content,
-        heading: heading,
-        silent: silent,
-      });
-      open(target);
-      clearCache();
-      popToRoot();
-      closeMainWindow();
-    };
-
-    // Render a loading state while the user selects a vault
-    if (vaults.length > 1 && !selectedVault) {
-      return <List isLoading={true} />;
-    }
-
-    // Call the function to open Obsidian when ready
-    openObsidian();
-  }
-
-  // Otherwise, let the user select a vault
-  return (
-    <List isLoading={false}>
-      {vaultsWithPlugin.map((vault) => (
-        <List.Item
-          key={vault.key}
-          title={vault.name}
-          actions={
-            <ActionPanel>
-              <Action.Open
-                title="Append Note"
-                target={getObsidianTarget({
-                 type: ObsidianTargetType.AppendTask,
-                 path: notePath,
-                 vault: vault,
-                 text: "- [ ] " + content,
-                 heading: heading,
-                 silent: silent,
-                })}
-              />
-            </ActionPanel>
-          }
-        />
-      ))}
-    </List>
-  );
+  popToRoot();
+  closeMainWindow();
+  return null
 }
