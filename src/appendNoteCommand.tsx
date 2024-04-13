@@ -8,11 +8,11 @@ import {
   useObsidianVaults,
 } from "./utils/utils";
 import { appendFile} from "node:fs/promises";
+import { PATH_TO_INBOX } from "./appendTodoCommand";
 
 interface appendNoteArgs {
   text: string;
 }
-
 export default function AppendNote(props: { arguments: appendNoteArgs }) {
   const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
@@ -43,9 +43,10 @@ export default function AppendNote(props: { arguments: appendNoteArgs }) {
     return <NoPathProvided />;
   }
 
-  const inbox_md = "/Users/m0rtyn/Repos/motion/Log.md";
-  console.debug("🚀 ~ AppendNote ~ inbox_md:", inbox_md);
-  appendFile(inbox_md, "\n" + content);
+  const currentDate = new Date().toISOString().split("T")[0];
+  const inboxPath = PATH_TO_INBOX;
+
+  appendFile(inboxPath, `\n${currentDate} ${content}`);
 
   popToRoot();
   closeMainWindow();

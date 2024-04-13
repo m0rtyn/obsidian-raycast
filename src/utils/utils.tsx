@@ -335,6 +335,8 @@ export enum ObsidianTargetType {
   NewNote = "obsidian://new?vault=",
   AppendTask = "obsidian://advanced-uri?mode=append&filepath=",
   AppendNote = "obsidian://advanced-uri?mode=append&filepath=",
+  AppendDay = "",
+  AppendTodo = "",
 }
 
 export type ObsidianTarget =
@@ -358,7 +360,9 @@ export type ObsidianTarget =
       path: string;
       heading?: string;
       silent?: boolean;
-    };
+    }
+  | { type: ObsidianTargetType.AppendDay; vault: Vault }
+  | { type: ObsidianTargetType.AppendTodo; vault: Vault };
 
 export function getObsidianTarget(target: ObsidianTarget) {
   switch (target.type) {
@@ -419,6 +423,13 @@ export function getObsidianTarget(target: ObsidianTarget) {
         (target.silent ? "&openmode=silent" : "")
       );
     }
+    case ObsidianTargetType.AppendDay: {
+      return ObsidianTargetType.AppendDay + encodeURIComponent(target.vault.name);
+    }
+    case ObsidianTargetType.AppendTodo: {
+      return ObsidianTargetType.AppendTodo + encodeURIComponent(target.vault.name);
+    }
+
     default: {
       return "";
     }

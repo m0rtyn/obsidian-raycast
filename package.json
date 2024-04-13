@@ -16,6 +16,27 @@
     "adamadamsmusic"
   ],
   "license": "MIT",
+  "dependencies": {
+    "@raycast/api": "^1.47.0",
+    "@types/uuid": "^8.3.4",
+    "uuid": "^8.3.2",
+    "yaml": "^2.1.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.6",
+    "@types/node": "~16.10.0",
+    "@types/react": "^17.0.52",
+    "eslint": "^8.42.0",
+    "prettier": "^2.8.8",
+    "typescript": "^4.5.4"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "ray publish"
+  },
   "preferences": [
     {
       "name": "vaultPath",
@@ -467,27 +488,31 @@
           "type": "checkbox"
         }
       ]
+    },
+    {
+      "name": "appendDayCommand",
+      "title": "Append Day",
+      "subtitle": "Obsidian",
+      "description": "Append a day to the inbox",
+      "mode": "view",
+      "arguments": [],
+      "preferences": []
+    },
+    {
+      "name": "appendTodoCommand",
+      "title": "Append Todo",
+      "subtitle": "Obsidian",
+      "description": "Append a todo to the inbox",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "text",
+          "placeholder": "Your Todo",
+          "type": "text",
+          "required": true
+        }
+      ],
+      "preferences": []
     }
-  ],
-  "dependencies": {
-    "@raycast/api": "^1.47.0",
-    "@types/uuid": "^8.3.4",
-    "uuid": "^8.3.2",
-    "yaml": "^2.1.1"
-  },
-  "devDependencies": {
-    "@raycast/eslint-config": "^1.0.6",
-    "@types/node": "~16.10.0",
-    "@types/react": "^17.0.52",
-    "eslint": "^8.42.0",
-    "prettier": "^2.8.8",
-    "typescript": "^4.5.4"
-  },
-  "scripts": {
-    "build": "ray build -e dist",
-    "dev": "ray develop",
-    "fix-lint": "ray lint --fix",
-    "lint": "ray lint",
-    "publish": "ray publish"
-  }
+  ]
 }

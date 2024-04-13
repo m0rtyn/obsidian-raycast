@@ -13,26 +13,19 @@ import {
   vaultPluginCheck,
 } from "./utils/utils";
 import { clearCache } from "./utils/data/cache";
+import { getDateContent } from "./utils/getDateContent";
 
 interface appendTaskArgs {
   text: string;
   dueDate: string;
 }
 
-const MS_IN_DAY = 1000 * 60 * 60 * 24;
-
 export default function AppendTask(props: { arguments: appendTaskArgs }) {
   const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
+
   const { dueDate } = props.arguments;
-  const todayDate = new Date().toISOString().slice(0, 10)
-  const tomorrowDate = new Date(Date.now() + MS_IN_DAY).toISOString().slice(0, 10)
-  const date = dueDate === "today" 
-    ? todayDate 
-    : dueDate === "tomorrow" 
-      ? tomorrowDate 
-      : dueDate;
-  const dateContent = dueDate ? ` 📅 ${date}` : "";
+  const dateContent = getDateContent(dueDate);
 
   const { appendTemplate, heading, notePath, noteTag, vaultName, silent } =
     getPreferenceValues<appendTaskPreferences>();
