@@ -499,6 +499,15 @@
       "preferences": []
     },
     {
+      "name": "appendPsychoCommand",
+      "title": "Append Psycho",
+      "subtitle": "Obsidian",
+      "description": "Append a psycho session",
+      "mode": "view",
+      "arguments": [],
+      "preferences": []
+    },
+    {
       "name": "appendTodoCommand",
       "title": "Append Todo",
       "subtitle": "Obsidian",
