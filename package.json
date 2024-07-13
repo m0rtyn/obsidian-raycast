@@ -28,6 +28,7 @@
     "@types/react": "^17.0.52",
     "eslint": "^8.42.0",
     "prettier": "^2.8.8",
+    "react-devtools": "^5.2.0",
     "typescript": "^4.5.4"
   },
   "scripts": {
@@ -386,7 +387,7 @@
       "title": "Append Task",
       "subtitle": "Obsidian",
       "description": "Append a task to a note of your choice",
-      "mode": "view",
+      "mode": "no-view",
       "arguments": [
         {
           "name": "text",
@@ -401,53 +402,14 @@
           "required": false
         }
       ],
-      "preferences": [
-        {
-          "description": "Path of note",
-          "name": "notePath",
-          "required": true,
-          "title": "Path of the note you wish to append the task to",
-          "type": "textfield"
-        },
-        {
-          "name": "noteTag",
-          "required": false,
-          "title": "Tag to append to the beginning of the task.",
-          "description": "Defaults to #task for compatibility with Obsidian Tasks.",
-          "type": "textfield",
-          "default": "#task"
-        },
-        {
-          "description": "Name of Obsidian vault where note is",
-          "name": "vaultName",
-          "required": false,
-          "title": "Name of Obsidian vault where note is",
-          "type": "textfield"
-        },
-        {
-          "description": "If no heading is not set, text will be appended to the end of the note",
-          "name": "heading",
-          "required": false,
-          "title": "Name of heading in note in which to append",
-          "type": "textfield"
-        },
-        {
-          "default": true,
-          "description": "Don't open note when appending.",
-          "label": "Silent Mode",
-          "name": "silent",
-          "required": false,
-          "title": "Silent Mode",
-          "type": "checkbox"
-        }
-      ]
+      "preferences": []
     },
     {
       "name": "appendNoteCommand",
       "title": "Append Note",
       "subtitle": "Obsidian",
       "description": "Append a note to a note of your choice",
-      "mode": "view",
+      "mode": "no-view",
       "arguments": [
         {
           "name": "text",
@@ -456,45 +418,14 @@
           "required": true
         }
       ],
-      "preferences": [
-        {
-          "description": "Path of note",
-          "name": "notePath",
-          "required": true,
-          "title": "Path of the note you wish to append the task to",
-          "type": "textfield"
-        },
-        {
-          "description": "Name of Obsidian vault where note is",
-          "name": "vaultName",
-          "required": false,
-          "title": "Name of Obsidian vault where note is",
-          "type": "textfield"
-        },
-        {
-          "description": "If no heading is not set, text will be appended to the end of the note",
-          "name": "heading",
-          "required": false,
-          "title": "Name of heading in note in which to append",
-          "type": "textfield"
-        },
-        {
-          "default": true,
-          "description": "Don't open note when appending.",
-          "label": "Silent Mode",
-          "name": "silent",
-          "required": false,
-          "title": "Silent Mode",
-          "type": "checkbox"
-        }
-      ]
+      "preferences": []
     },
     {
       "name": "appendDayCommand",
       "title": "Append Day",
       "subtitle": "Obsidian",
       "description": "Append a day to the inbox",
-      "mode": "view",
+      "mode": "no-view",
       "arguments": [],
       "preferences": []
     },
@@ -503,7 +434,7 @@
       "title": "Append Psycho",
       "subtitle": "Obsidian",
       "description": "Append a psycho session",
-      "mode": "view",
+      "mode": "no-view",
       "arguments": [],
       "preferences": []
     },
@@ -512,11 +443,27 @@
       "title": "Append Todo",
       "subtitle": "Obsidian",
       "description": "Append a todo to the inbox",
-      "mode": "view",
+      "mode": "no-view",
       "arguments": [
         {
           "name": "text",
           "placeholder": "Your Todo",
+          "type": "text",
+          "required": true
+        }
+      ],
+      "preferences": []
+    },
+    {
+      "name": "appendDoneTodoCommand",
+      "title": "Append Done Todo",
+      "subtitle": "Obsidian",
+      "description": "Append a done todo to the inbox",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "text",
+          "placeholder": "Your Done Todo",
           "type": "text",
           "required": true
         }

@@ -14,41 +14,17 @@ interface appendNoteArgs {
   text: string;
 }
 export default function AppendNote(props: { arguments: appendNoteArgs }) {
-  const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
 
-  const { appendTemplate, heading, notePath, vaultName, silent } = getPreferenceValues<appendTaskPreferences>();
-  // const [vaultsWithPlugin, vaultsWithoutPlugin] = vaultPluginCheck(vaults, "obsidian-advanced-uri");
-  const [content, setContent] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function getContent() {
-      const content = await applyTemplates(text, appendTemplate);
-      setContent(content);
-    }
-
-    getContent();
-  }, [appendTemplate, text]);
-
-  if (!ready || content === null) {
-    return <List isLoading={true} />;
-  }
-
-  if (vaults.length === 0) {
-    return <NoVaultFoundMessage />;
-  }
-
-  if (!notePath) {
-    // Fail if selected vault doesn't have plugin
-    return <NoPathProvided />;
-  }
+  console.log(PATH_TO_INBOX);
 
   const currentDate = new Date().toISOString().split("T")[0];
   const inboxPath = PATH_TO_INBOX;
 
-  appendFile(inboxPath, `\n${currentDate} ${content}`);
+  appendFile(inboxPath, `\n${currentDate} ${text}`);
 
   popToRoot();
   closeMainWindow();
+
   return null
 }

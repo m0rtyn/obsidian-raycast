@@ -327,15 +327,17 @@ export async function appendSelectedTextTo(note: Note) {
   }
 }
 
+// TODO: remove dependency on advanced-uri plugin
 export enum ObsidianTargetType {
   OpenVault = "obsidian://open?vault=",
   OpenPath = "obsidian://open?path=",
   DailyNote = "obsidian://advanced-uri?daily=true&vault=",
   DailyNoteAppend = "obsidian://advanced-uri?daily=true&mode=append",
   NewNote = "obsidian://new?vault=",
-  AppendTask = "obsidian://advanced-uri?mode=append&filepath=",
-  AppendNote = "obsidian://advanced-uri?mode=append&filepath=",
+  AppendTask = "",
+  AppendNote = "",
   AppendTodo = "",
+  AppendDoneTodo = "",
   AppendDay = "",
   AppendPsycho = "",
 }
@@ -350,17 +352,12 @@ export type ObsidianTarget =
       type: ObsidianTargetType.AppendTask;
       vault: Vault;
       text: string;
-      path: string;
-      heading?: string;
-      silent?: boolean;
+      dueDate?: string;
     }
   | {
       type: ObsidianTargetType.AppendNote;
       vault: Vault;
       text: string;
-      path: string;
-      heading?: string;
-      silent?: boolean;
     }
   | { type: ObsidianTargetType.AppendDay; vault: Vault }
   | { type: ObsidianTargetType.AppendTodo; vault: Vault }
@@ -400,39 +397,19 @@ export function getObsidianTarget(target: ObsidianTarget) {
       );
     }
     case ObsidianTargetType.AppendTask: {
-      const headingParam = target.heading ? "&heading=" + encodeURIComponent(target.heading) : "";
-      return (
-        ObsidianTargetType.AppendTask +
-        encodeURIComponent(target.path) +
-        "&data=" +
-        encodeURIComponent(target.text) +
-        "&vault=" +
-        encodeURIComponent(target.vault.name) +
-        headingParam +
-        (target.silent ? "&openmode=silent" : "")
-      );
+      return ObsidianTargetType.AppendTask;
     }
     case ObsidianTargetType.AppendNote: {
-      const headingParam = target.heading ? "&heading=" + encodeURIComponent(target.heading) : "";
-      return (
-        ObsidianTargetType.AppendNote +
-        encodeURIComponent(target.path) +
-        "&data=" +
-        encodeURIComponent(target.text) +
-        "&vault=" +
-        encodeURIComponent(target.vault.name) +
-        headingParam +
-        (target.silent ? "&openmode=silent" : "")
-      );
+      return ObsidianTargetType.AppendNote;
     }
     case ObsidianTargetType.AppendDay: {
-      return ObsidianTargetType.AppendDay + encodeURIComponent(target.vault.name);
+      return ObsidianTargetType.AppendDay;
     }
     case ObsidianTargetType.AppendPsycho: {
-      return ObsidianTargetType.AppendPsycho + encodeURIComponent(target.vault.name);
+      return ObsidianTargetType.AppendPsycho;
     }
     case ObsidianTargetType.AppendTodo: {
-      return ObsidianTargetType.AppendTodo + encodeURIComponent(target.vault.name);
+      return ObsidianTargetType.AppendTodo;
     }
 
     default: {

@@ -11,12 +11,7 @@ interface appendTodoArgs {
   text: string;
 }
 export default function AppendTodo(props: { arguments: appendTodoArgs }) {
-  const { vaults, ready } = useObsidianVaults();
   const { text } = props.arguments;
-
-  if (!ready) return <List isLoading={true} />;
-
-  if (vaults.length === 0) return <NoVaultFoundMessage />;
 
   const currentDate = new Date().toISOString().split("T")[0];
   const inboxPath = PATH_TO_INBOX;
